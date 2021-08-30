@@ -1,0 +1,12 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/logs/logs"
+  ],
+  "window": {
+    "navigationBarBackgroundColor": "#333",
+    "navigationBarTextStyle": "white",
+    "navigationBarTitleText": "Calvin小程序"
+  },
+  "sitemapLocation": "sitemap.json"
+}
