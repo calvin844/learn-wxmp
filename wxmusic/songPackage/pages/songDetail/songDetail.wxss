@@ -1,0 +1,149 @@
+/* pages/songDetail/songDetail.wxss */
+.songDetailContainer {
+    height: 100%;
+    background: rgba(0, 0, 0, .5);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* 底座 */
+.circle {
+    position: relative;
+    z-index: 3;
+    width: 60rpx;
+    height: 60rpx;
+    border-radius: 50%;
+    background: #fff;
+    margin: 10rpx 0;
+}
+
+/* 摇杆 */
+.songDetailContainer .needle {
+    position: relative;
+    top: -40rpx;
+    left: 60rpx;
+    width: 192rpx;
+    height: 274rpx;
+    z-index: 2;
+    /* 设置旋转中心，x轴为40rpx，y轴为0 */
+    transform-origin: 40rpx 0;
+    /* 设置旋转角度，正数为左转，负数为右转 */
+    transform: rotate(-20deg);
+    /* 样式发生变化时的过渡时间设置为1秒 */
+    transition: transform 1s;
+}
+
+.songDetailContainer .needleRotate {
+    transform: rotate(0deg);
+}
+
+/* 磁盘 */
+.discContainer {
+    position: relative;
+    top: -170rpx;
+    width: 598rpx;
+    height: 598rpx;
+}
+
+.discAnimation {
+    /* 设置动画：动画名称，动画时间，动画方式（linear平滑过渡） 循环方式（infinite无限循环） */
+    animation: disc 4s linear infinite;
+    /* 设置动画延迟多久后开始 */
+    animation-delay: 1s;
+}
+
+/* 动画属性必须搭配@keyframes ｛动画名｝ */
+/* 
+    @keyframes：设置动画帧，有两种方式
+        1. from to：适用于只有2帧的动画，只有起始帧和结束帧
+            起始帧为from，结束帧为to
+        2. 百分比：适用于多于2帧的动画
+            起始帧为0%，结束帧为100%，中间可任意拆分
+*/
+@keyframes disc {
+    from {
+        transform: rotate(0deg)
+    }
+
+    to {
+        transform: rotate(360deg)
+    }
+}
+
+.discContainer .disc {
+    width: 598rpx;
+    height: 598rpx;
+}
+
+.discContainer .musicImg {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    margin: auto;
+    width: 370rpx;
+    height: 370rpx;
+    border-radius: 50%;
+}
+
+/* 底部控制区域 */
+.musicControl {
+    position: absolute;
+    bottom: 40rpx;
+    left: 0;
+    border-top: 1rpx solid #fff;
+    width: 100%;
+    display: flex;
+
+}
+
+.musicControl text {
+    width: 20%;
+    height: 120rpx;
+    line-height: 120rpx;
+    text-align: center;
+    color: #fff;
+    font-size: 50rpx;
+}
+
+.musicControl text.big {
+    font-size: 80rpx;
+}
+
+/* 进度条控制区域 */
+.progressControl {
+    position: absolute;
+    bottom: 200rpx;
+    width: 640rpx;
+    height: 80rpx;
+    line-height: 80rpx;
+    display: flex;
+}
+
+.barControl {
+    position: relative;
+    width: 410rpx;
+    height: 4rpx;
+    background: rgba(0, 0, 0, .5);
+    margin: auto;
+}
+
+.audioCurrentTimeBar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1;
+    height: 4rpx;
+    background: red
+}
+.audioCircle{
+    position: absolute;
+    top: -6rpx;
+    right: -12rpx;
+    width: 12rpx;
+    height: 12rpx;
+    border-radius: 50%;
+    background: #fff;
+}

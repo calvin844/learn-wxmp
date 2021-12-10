@@ -22,12 +22,25 @@
 import config from './config'
 export default (url, data = {}, method = "GET") => {
   return new Promise((resolve, reject) => {
+    let cookie = wx.getStorageSync('cookies')
     // 1. new Promise初始化promise实例的状态为pending
     wx.request({
       url: config.host + url,
       data,
       method,
+      header: {
+        cookie: cookie ? cookie.find(item => item.indexOf('MUSIC_U') != -1) : ""
+      },
       success: (res) => {
+        // 判断是否为登录请求
+        if (data.isLogin) {
+          console.log(res)
+          // 将用户cookie存入至本地
+          wx.setStorage({
+            key: 'cookies',
+            data: res.cookies
+          })
+        }
         // resolve修改promise的状态为成功状态
         resolve(res.data)
       },

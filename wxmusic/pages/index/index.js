@@ -10,7 +10,16 @@ Page({
         recommendList: [], //推荐歌单数据
         topList: [], //排行榜数据
     },
-
+    toOther() {
+        wx.navigateTo({
+            url: '/otherPackage/pages/other/other',
+        })
+    },
+    toRecommendSong() {
+        wx.navigateTo({
+            url: '/songPackage/pages/recommendSong/recommendSong',
+        })
+    },
     /**
      * 生命周期函数--监听页面加载
      */

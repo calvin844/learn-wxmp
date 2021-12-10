@@ -51,26 +51,34 @@ Page({
         // phone=15711140593&password=123456yzy
         let result = await request('/login/cellphone', {
             phone,
-            password
+            password,
+            isLogin: true
         })
-        let title = "";
-        let icon = "";
         if (result.code === 200) {
-            title = '登录成功'
+            wx.showToast({
+                title: '登录成功'
+            })
+            wx.setStorageSync('userInfo', JSON.stringify(result.profile))
+            // reLaunch关闭其他所有页面，跳转到应用内的某个页面，这里要用reLaunch才能强制刷新个人中心页面缓存
+            wx.reLaunch({
+                url: '/pages/personal/personal',
+            })
         } else if (result.code === 400) {
-            title = '手机号错误'
-            icon = 'none'
+            wx.showToast({
+                title: '手机号错误',
+                icon: 'none'
+            })
         } else if (result.code === 502) {
-            title = '密码错误'
-            icon = 'none'
+            wx.showToast({
+                title: '密码错误',
+                icon: 'none'
+            })
         } else {
-            title = '登录失败'
-            icon = 'none'
+            wx.showToast({
+                title: '登录失败',
+                icon: 'none'
+            })
         }
-        wx.showToast({
-            title,
-            icon
-        })
 
     },
     /**

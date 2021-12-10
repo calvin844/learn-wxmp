@@ -1,4 +1,5 @@
 // pages/personal/personal.js
+import request from '../../utils/request'
 let startY = 0; //手指起始的坐标
 let moveY = 0; //手指移动的坐标
 let moveDistance = 0; //手指移动的距离
@@ -9,7 +10,9 @@ Page({
      */
     data: {
         coverTransform: 'translateY(0)',
-        coverTransition: ''
+        coverTransition: '',
+        userInfo: {}, //用户信息
+        recentPlayList: [], //用户播放记录
     },
 
 
@@ -40,12 +43,48 @@ Page({
             coverTransition: 'transform 1s linear'
         })
     },
+    // 跳转至登录login页面的回调
+    toLogin() {
+        wx.navigateTo({
+            url: '/pages/login/login',
+        })
+    },
+    // 获取用户播放记录方法
+    async getUserRecentPlayList(uid) {
+        let recentPlayListData = await request('/user/record', {
+            uid,
+            type: 0
+        })
+        let index = 0
+        // 后端返回没有唯一值，这里手动添加id作为唯一值
+        let recentPlayList = recentPlayListData.allData.splice(0, 10).map(item => {
+            item.id = index++
+            return item
+        })
+        this.setData({
+            recentPlayList
+        })
+        // console.log(recentPlayListData)
+    },
 
     /**
      * 生命周期函数--监听页面加载
+     * 这里只执行一次
      */
-    onLoad: function (options) {
-
+    onLoad: function () {
+        // 用户登录后获取用户数据
+        if (wx.getStorageSync('userInfo')) {
+            // 读取用户的基本信息
+            let userInfo = JSON.parse(wx.getStorageSync('userInfo'))
+            if (userInfo) {
+                // 更新userInfo的状态
+                this.setData({
+                    userInfo
+                })
+                // 获取用户播放记录
+                this.getUserRecentPlayList(userInfo.userId)
+            }
+        }
     },
 
     /**
